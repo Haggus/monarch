@@ -1,0 +1,4 @@
+[package]
+name = "monarch"
+version = "0.1.0"
+authors = ["Mateusz Mrowiec <matt.mrowiec@gmail.com>"]
