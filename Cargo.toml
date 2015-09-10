@@ -5,3 +5,5 @@ authors = ["Mateusz Mrowiec <matt.mrowiec@gmail.com>"]
 
 [dependencies]
 image = "*"
+time = "*"
+docopt = "*"

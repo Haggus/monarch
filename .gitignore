@@ -12,3 +12,6 @@
 
 # Vim
 *.swp
+
+# PNG files
+*.png
