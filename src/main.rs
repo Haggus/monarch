@@ -55,7 +55,7 @@ fn gen_palette(palette: &mut HashSet<Rgba<u8>>) -> () {
     let mut current_y:u32 = 0;
 
     for pix in palette.iter() {
-        new_img.put_pixel(current_x, current_y, pix.clone());
+        new_img.put_pixel(current_x, current_y, *pix);
         current_x += 1;
         if current_x == size {
             current_x = 0;
