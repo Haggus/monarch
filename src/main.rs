@@ -3,28 +3,23 @@ extern crate time;
 
 mod palette;
 
-use std::path::Path;
-use image::{GenericImage};
-use time::*;
-use std::ops::Sub;
+use time::now;
+use image::GenericImage;
 use palette::Palette;
 
 fn main() {
-    let img = image::open(&Path::new("test.png")).unwrap();
-    let mut palette:Palette = Palette::new();
+    let img = image::open("test.png").unwrap();
+    let mut palette = Palette::new();
 
     let (width, height) = img.dimensions();
 
-    let total_pixels = img.pixels().count();
-    let mut current_pixel = 1;
+    let total_pixels = (width * height) as usize;
 
     let start = time::now();
-    for pixel in img.pixels() {
-        let (_,_,pix) = pixel;
+    for (i, (_, _, pix)) in img.pixels().enumerate() {
         palette.insert(pix);
-        let percentage = (current_pixel * 100) / total_pixels;
+        let percentage = ((i + 1) * 100) / total_pixels;
         //print!("\r{}% | {} / {}", percentage, current_pixel, total_pixels);
-        current_pixel += 1;
     }
     println!("");
 
@@ -40,6 +35,6 @@ fn main() {
     }
 
     let end = time::now();
-    let total_time = end.sub(start);
+    let total_time = end - start;
     println!("total time: {:?}", total_time);
 }

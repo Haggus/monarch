@@ -1,5 +1,4 @@
 use std::io;
-use std::path::Path;
 use std::collections::HashSet;
 use image::{GenericImage, ImageBuffer, Rgba};
 
@@ -19,30 +18,19 @@ impl Palette {
     }
 
     pub fn generate(&mut self) -> Result<(), io::Error> {
-        let size:u32;
-
-        match self.pixels.len() {
-            0...2 => size = 2,
-            _ => {
-                let length = self.pixels.len() as f32;
-                size = length.sqrt().ceil() as u32;
+        let size: u32 = match self.pixels.len() {
+            0...2 => 2,
+            length => {
+                (length as f64).sqrt().ceil() as u32
             }
-        }
+        };
 
         let mut new_img = ImageBuffer::new(size, size);
 
-        let mut current_x:u32 = 0;
-        let mut current_y:u32 = 0;
-
-        for pix in self.pixels.iter() {
-            new_img.put_pixel(current_x, current_y, *pix);
-            current_x += 1;
-            if current_x == size {
-                current_x = 0;
-                current_y += 1;
-            }
+        for (&new_pix, output_pix) in self.pixels.iter().zip(new_img.pixels_mut()) {
+            *output_pix = new_pix;
         }
 
-        new_img.save(&Path::new("test_palette.png"))
+        new_img.save("test_palette.png")
     }
 }
